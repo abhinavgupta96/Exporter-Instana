@@ -1,0 +1,6 @@
+.git*
+config/*
+config/config-sample.ini
+config/*-config.ini
+ReadMe.md
+*.yaml

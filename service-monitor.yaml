@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: instana-exporter-svc-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: sre-instana-exporter
+  namespaceSelector:
+    matchNames:
+    - glass
+  endpoints:
+  - port: instana-port
+    path: "/metrics"
+    scheme: http

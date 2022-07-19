@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sre-instana-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: sre-instana-exporter
+  template:
+    metadata:
+      labels:
+        name: sre-instana-exporter
+    spec:
+      containers:
+      - name: sre-instana-exporter
+        image: https://hub.docker.com/repository/docker/abhinavgupta96/sre-instana-exporter:v5
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort:  1080
+          name: instana-port
+        volumeMounts:
+        - name: vol-ini
+          mountPath: /10X_instana_exporter/config
+      imagePullSecrets:
+      - name: harbor-cloud-registry
+      volumes:
+        - name: vol-ini
+          secret:
+            secretName: sre-instana-secret
